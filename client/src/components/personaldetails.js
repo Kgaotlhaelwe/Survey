@@ -34,7 +34,7 @@ class PersonalDetails extends Component {
     if (obj.surname == "" && obj.firstName == "" && obj.contactNumber == "", obj.date == "", obj.age == "", favourite_food.length == 0, obj.eatOut == "", obj.WatchMovies == "", obj.watchTv == "", obj.listenToRadio == "") {
             this.ErrorValidation("Please enter all details")
         } else{
-            axios.post('http://localhost:4000/survey/surveyanswer' , obj).then((message)=>{
+            axios.post('http://localhost:5000/survey/surveyanswer' , obj).then((message)=>{
             console.log("added successfully") ;
             Swal.fire({
                 position: 'top-end',

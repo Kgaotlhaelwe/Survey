@@ -16,7 +16,7 @@ app.use(
   })
 )
 
-const port = process.env.PORT || 4000 ;
+
 
 mongoose
 .connect(db, {
@@ -25,11 +25,6 @@ mongoose
 }) // Adding new mongo url parser
 .then(() => console.log('MongoDB Connected...'))
 .catch(err => console.log(err));
-
-
-
-
-
 app.get('/', (request, response) => {
     response.send( 'Node.js, Express, and Postgres API' )
   })
@@ -37,7 +32,9 @@ app.get('/', (request, response) => {
   //Routes 
   app.use('/survey/surveyanswer', require('./router/router'));
 
-// Serve static assets in production
+
+
+  // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
   // Set static folder
   app.use(express.static('client/build'));
@@ -47,6 +44,8 @@ if (process.env.NODE_ENV === 'production') {
   );
 }
 
+
+const port = process.env.PORT || 5000 ;
   app.listen(port, () => {
     console.log(`App running on port ${port}.`)
   })

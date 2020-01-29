@@ -33,7 +33,7 @@ class ViewResults extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4000/survey/surveyanswer').then((data) => {
+        axios.get('http://localhost:5000/survey/surveyanswer').then((data) => {
             this.setState({
                 data: data
             })
