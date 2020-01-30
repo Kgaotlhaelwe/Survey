@@ -13,6 +13,7 @@ class ViewResults extends Component {
     totalwatchTVAverage = 0;
     totalwatchMovies = 0;
     totalistenToRadioAverage = 0;
+    age =[]  ;
     state = {
         data: [],
         oldest: 0,
@@ -38,17 +39,31 @@ class ViewResults extends Component {
                 data: data
             })
 
-            console.log(this.state.data.data)
+           
 
             for (let index = 0; index < this.state.data.data.length; index++) {
+                
                 this.state.age.push(parseInt(this.state.data.data[index].age))
-                console.log(this.state.data.data[index].listenToRadio);
+               
                 this.totalistenToRadioAverage = this.totalistenToRadioAverage + parseInt(this.state.data.data[index].listenToRadio);
                 this.totalEatOutAverageRate = this.totalEatOutAverageRate + parseInt(this.state.data.data[index].eatOut)
                 this.totalwatchTVAverage = this.totalwatchTVAverage + parseInt(this.state.data.data[index].watchTv) ;
                 this.totalwatchMovies =this.totalwatchMovies + parseInt(this.state.data.data[index].watchMovies)
             }
-            this.state.age.sort()
+
+            this.age =this.state.age ;
+            for (let index = 0; index < this.age.length; index++) {
+               for(var j  = 0 ;  j <this.age.length-index-1 ; j++){
+                   if(this.age[j] >this.age[j+1]){
+                       var temp =this.age[j] ;
+                       this.age[j] =this.age[j+1] ;
+                       this.age[j+1] =temp ;
+                   }
+               }
+                
+            }
+           
+            console.log(this.age)
             this.state.age.forEach((t) => {
                 this.setState({
                     sumAge: this.state.sumAge + t
@@ -81,11 +96,7 @@ class ViewResults extends Component {
 
             }
             
-            console.log(this.totalEatOutAverageRate) ;
-            console.log(this.totalwatchMovies) ;
-            console.log(this.totalwatchTVAverage) ;
-            console.log(this.totalistenToRadioAverage)
-
+        
             this.setState({
                 pizzaPercentage: this.totalPizza / this.state.data.data.length * 100,
                 papPercentage: this.totalPap / this.state.data.data.length * 100,
@@ -94,12 +105,13 @@ class ViewResults extends Component {
                 watchMoviesAverageRating:this.totalwatchMovies / this.state.data.data.length,
                 watchTVAverageRating:this.totalwatchTVAverage / this.state.data.data.length ,
                 listenToRadioAverage:this.totalistenToRadioAverage / this.state.data.data.length ,
-                totalSurvey : this.state.data.data.length
+                totalSurvey : this.state.data.data.length ,
+                age:this.age
 
 
             })
 
-            console.log((this.state))
+          
 
         }).catch((error) => {
         })
@@ -117,12 +129,13 @@ class ViewResults extends Component {
 
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Average age
-                        <span class="text-end">{this.state.averageAge}</span>
+                        <span class="text-end">{Math.round(this.state.averageAge *10) /10}</span>
                     </li>
 
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Oldest person who participate in survey
-                        <span class="text-end">{this.state.oldest}</span>
+                        <span class="text-end">{Math.round (this.state.oldest * 10)/10}</span>
+                        
                     </li>
 
                     <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -132,32 +145,32 @@ class ViewResults extends Component {
 
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Percentage of people who like Pizza
-                        <span class="text-end">{this.state.pizzaPercentage}</span>
+                        <span class="text-end">{Math.round(this.state.pizzaPercentage*10)/10} %</span>
                     </li>
 
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Percentage of people who like Pasta
-                        <span class="text-end">{this.state.pastaPercentage}</span>
+                        <span class="text-end">{Math.round(this.state.pastaPercentage*10)/10} %</span>
                     </li>
 
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Percentage of people who like Pap and Wors
-                        <span class="text-end">{this.state.papPercentage}</span>
+                        <span class="text-end">{Math.round(this.state.papPercentage*10)/10} %</span>
                     </li>
 
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         People like to eat out
-                    <span class="text-end">{this.state.eatOutAverageRating}</span>
+                    <span class="text-end">{Math.round(this.state.eatOutAverageRating *10)/10} </span>
                     </li>
 
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         People like to watch movies
-                    <span class="text-end">{this.state.watchMoviesAverageRating}</span>
+                    <span class="text-end">{Math.round(this.state.watchMoviesAverageRating*10)/10}</span>
                     </li>
 
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         People like to watch TV
-        <span class="text-end">{this.state.watchTVAverageRating}</span>
+        <span class="text-end">{Math.round(this.state.watchTVAverageRating*10)/10}</span>
                     </li>
 
                     <li class="list-group-item d-flex justify-content-between align-items-center">

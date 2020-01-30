@@ -22,7 +22,7 @@ class PersonalDetails extends Component {
         let obj = {
             surname: this.dom("surname"),
             firstName: this.dom("firstname"),
-            contactNumber: this.dom("firstname"),
+            contactNumber: this.dom("contact_number"),
             date: this.dom("date"),
             age: this.dom("age"),
             favouriteFood: favourite_food,
@@ -34,18 +34,45 @@ class PersonalDetails extends Component {
     if (obj.surname == "" && obj.firstName == "" && obj.contactNumber == "", obj.date == "", obj.age == "", favourite_food.length == 0, obj.eatOut == "", obj.WatchMovies == "", obj.watchTv == "", obj.listenToRadio == "") {
             this.ErrorValidation("Please enter all details")
         } else{
-            axios.post('http://localhost:5000/survey/surveyanswer' , obj).then((message)=>{
-            console.log("added successfully") ;
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Survey submitted successfully',
-                showConfirmButton: false,
-                timer: 1500
-              })
-        }).catch((error)=>{{
-           this.ErrorValidation("not added successfuly")
-        }})
+
+            if(obj.age < 5  ){
+                this.ErrorValidation("Age shouldn't be less 5 ")
+            } else if (obj.age >120 ){
+                this.ErrorValidation("Age shouldn't be  greater than 120")
+            } else {
+                axios.post('http://localhost:5000/survey/surveyanswer' , obj).then((message)=>{
+                    console.log("added successfully") ;
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Survey submitted successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                      })
+
+                     // this.dom("surname").value = "" ;
+                     // this.dom("firstname").value = ""
+                      //this.dom("date").value ="",
+                      //this.dom("age").value =""
+
+                      document.getElementById("surname").value='' 
+                      document.getElementById("firstname").value=''
+                    document.getElementById("date").value='' 
+                      document.getElementById("age").value=''
+                      document.getElementById("contact_number").value=''
+                      document.getElementById("pizza").checked=false
+                      document.getElementById("pasta").checked=false
+                      document.getElementById("pap_and_wors").checked=false;
+                      document.getElementById("beef_stir_fry").checked=false;
+                     // document.getElementById("checken_stir_fry").checked=false;
+//document.getElementById("other").checked=false;
+                      
+
+                }).catch((error)=>{{
+                   this.ErrorValidation("not added successfuly")
+                }})
+            }
+
         }
     })
 
@@ -146,21 +173,21 @@ class PersonalDetails extends Component {
                             <label class="sr-only" for="inlineFormInputGroup">Firstname</label>
                             <div class="input-group mb-2 w-25 ml-5">
                                 <div class="input-group-prepend">
-                                    <div class="input-group-text"><i class="fas fa-phone"></i></div>
+                                    <div class="input-group-text"><i class="fas fa-calendar-day"></i></div>
                                 </div>
                                 <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Age" id="age" />
                             </div>
                         </div>
                         <p class="ml-5 mt-4">What is your favourite food (You can choose more than 1)</p>
                         <div class="form-check ml-5 mt-4">
-                            <input class="form-check-input" type="checkbox" onChange={this.favourite_food.bind(this, "Pizza")} value="pizza" id="defaultCheck1" id="pizza" />
+                            <input class="form-check-input" type="checkbox" onChange={this.favourite_food.bind(this, "Pizza")} value="pizza"  id="pizza" />
                             <label class="form-check-label  ml-4" for="defaultCheck1">
                                 Pizza
                             </label>
                         </div>
 
                         <div class="form-check ml-5 mt-4">
-                            <input class="form-check-input" type="checkbox" onChange={this.favourite_food.bind(this, "Pasta")} value="Pasta" id="defaultCheck1" id="pasta" />
+                            <input class="form-check-input" type="checkbox" onChange={this.favourite_food.bind(this, "Pasta")} value="Pasta"  id="pasta" />
                             <label class="form-check-label  ml-4" for="defaultCheck1">
                                 Pasta
                             </label>
